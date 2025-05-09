@@ -1,44 +1,69 @@
-import React from 'react';
+import React from 'react'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Jobs from './pages/Jobs'
+import Freelancers from './pages/Freelancers'
+import ClientDashboard from './pages/ClientDashboard'
+import FreelancerDashboard from './pages/FreelancerDashboard'
+import PrivateRoute from './components/PrivateRoute'
+import { useAuth } from './context/AuthContext'
+import EditJob from './pages/EditJob'
 
 const App = () => {
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
+
+  const handleLogout = async () => {
+    await logout()
+    navigate('/')
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Ylävalikko */}
       <nav className="bg-gray-800 px-8 py-4 flex justify-between items-center shadow-md">
         <h1 className="text-2xl font-extrabold text-green-400 tracking-wide">FreeWo</h1>
         <div className="space-x-6">
-          <button className="hover:text-green-300">Etusivu</button>
-          <button className="hover:text-green-300">Toimeksiannot</button>
-          <button className="hover:text-green-300">Freelancerit</button>
-          <button className="hover:text-green-300">Kirjaudu</button>
+          <Link to="/" className="hover:underline">Etusivu</Link>
+          <Link to="/jobs" className="hover:underline">Toimeksiannot</Link>
+          <Link to="/freelancers" className="hover:underline">Freelancerit</Link>
+          {user?.role === 'client' && (
+            <Link to="/client-dashboard" className="hover:underline">Omat Toimeksiannot</Link>
+          )}
         </div>
+
+        {user ? (
+          <div className="space-x-4 flex items-center">
+            <span className="text-green-400 font-semibold">Tervetuloa, {user.name}</span>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+            >
+              Kirjaudu ulos
+            </button>
+          </div>
+        ) : (
+          <div className="space-x-4 hidden md:flex">
+            <Link to="/login" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Kirjaudu</Link>
+            <Link to="/register" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">Rekisteröidy</Link>
+          </div>
+        )}
       </nav>
 
-      {/* Hero-osio */}
-      <section className="bg-green-100 text-gray-900 w-full py-20 px-6 text-center">
-        <h2 className="text-5xl font-extrabold mb-4 tracking-tight">Tervetuloa FreeWo-sivustolle!</h2>
-        <p className="text-xl max-w-2xl mx-auto">
-          Etsi ja luo toimeksiantoja helposti. Liity mukaan freelancerina tai asiakkaana – täysin maksutta!
-        </p>
-        <div className="mt-8 flex justify-center space-x-6">
-          <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition">Rekisteröidy</button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition">Kirjaudu</button>
-        </div>
-      </section>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/jobs" element={<PrivateRoute><Jobs /></PrivateRoute>} />
+        <Route path="/freelancers" element={<PrivateRoute><Freelancers /></PrivateRoute>} />
+        <Route path="/client-dashboard" element={<PrivateRoute><ClientDashboard /></PrivateRoute>} />
+        <Route path="/edit-job/:id" element={<PrivateRoute><EditJob /></PrivateRoute>} />
 
-      {/* Esittelyosio */}
-      <div className="px-6 py-12 max-w-4xl mx-auto space-y-12">
-        <div>
-          <h3 className="text-3xl font-bold mb-2">Toimeksiannot</h3>
-          <p className="text-lg text-gray-400">Tutustu saatavilla oleviin toimeksiantoihin ja löydä sinulle sopiva työprojekti!</p>
-        </div>
-        <div>
-          <h3 className="text-3xl font-bold mb-2">Freelancerit</h3>
-          <p className="text-lg text-gray-400">Etsi lahjakkaita freelancereita eri kategorioista ja aloita yhteistyö helposti.</p>
-        </div>
-      </div>
+        <Route path="/freelancer-dashboard" element={<PrivateRoute><FreelancerDashboard /></PrivateRoute>} />
+      </Routes>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
