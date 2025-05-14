@@ -84,11 +84,10 @@ const EditJob = () => {
         <label className="block mb-2">Kategoria</label>
         <CategorySelect
           value={formData.category}
-          onChange={(e) =>
-            setFormData({ ...formData, category: e.target.value })
-          }
+          onChange={(value) => setFormData({ ...formData, category: value })}
           required
         />
+
 
         <label className="block mb-2 mt-4">Sijainti</label>
         <input

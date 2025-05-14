@@ -2,31 +2,31 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 
-const FreelancerProfile = () => {
-  const { id } = useParams()
+const JobProfile = () => {
+  const { id } = useParams() // Hakee toimeksiannon ID:n URL:sta
   const navigate = useNavigate()
-  const [freelancer, setFreelancer] = useState(null)
+  const [job, setJob] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const fetchFreelancer = async () => {
+    const fetchJob = async () => {
       try {
-        const res = await api.get(`/freelancers/${id}`)
-        setFreelancer(res.data)
+        const res = await api.get(`/jobs/${id}`) // Hakee toimeksiannon tiedot backendistä
+        setJob(res.data)
       } catch (err) {
-        console.error('Freelancerin tietojen haku epäonnistui', err)
-        setError('Freelanceria ei löytynyt tai tapahtui virhe.')
+        console.error('Toimeksiannon tietojen haku epäonnistui', err)
+        setError('Toimeksiantoa ei löytynyt tai tapahtui virhe.')
       } finally {
         setLoading(false)
       }
     }
 
-    fetchFreelancer()
+    fetchJob()
   }, [id])
 
   if (loading) {
-    return <p className="p-8">Ladataan freelancerin tietoja...</p>
+    return <p className="p-8">Ladataan toimeksiannon tietoja...</p>
   }
 
   if (error) {
@@ -34,7 +34,7 @@ const FreelancerProfile = () => {
       <div className="p-8">
         <p className="text-red-500">{error}</p>
         <button
-          onClick={() => navigate('/freelancers')}
+          onClick={() => navigate('/jobs')}
           className="mt-4 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded"
         >
           Takaisin
@@ -43,33 +43,33 @@ const FreelancerProfile = () => {
     )
   }
 
-  if (!freelancer) {
-    return <p className="p-8">Freelanceria ei löytynyt.</p>
+  if (!job) {
+    return <p className="p-8">Toimeksiantoa ei löytynyt.</p>
   }
 
   return (
     <div className="p-8">
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(-1)} // Navigoi takaisin edelliselle sivulle
         className="mb-4 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded"
       >
         Takaisin
       </button>
       <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-green-400 mb-4">{freelancer.name}</h1>
+        <h1 className="text-3xl font-bold text-green-400 mb-4">{job.title}</h1>
         <p className="text-lg text-gray-300 mb-2">
-          <strong>Kategoria:</strong> {freelancer.category}
+          <strong>Kategoria:</strong> {job.category}
         </p>
         <p className="text-lg text-gray-300 mb-2">
-          <strong>Sijainti:</strong> {freelancer.location}
+          <strong>Sijainti:</strong> {job.location}
         </p>
         <p className="text-lg text-gray-300 mb-4">
-          <strong>Skills:</strong> {freelancer.skills}
+          <strong>Budjetti:</strong> {job.budget} €
         </p>
-        <p className="text-gray-400">{freelancer.description}</p>
+        <p className="text-gray-400">{job.description}</p>
       </div>
     </div>
   )
 }
 
-export default FreelancerProfile
+export default JobProfile

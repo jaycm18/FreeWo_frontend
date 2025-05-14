@@ -65,7 +65,11 @@ const ClientDashboard = () => {
           required
           className="w-full p-3 mb-3 rounded bg-gray-900 text-white"
         />
-        <CategorySelect value={newJob.category} onChange={handleJobChange} required />
+        <CategorySelect
+          value={newJob.category}
+          onChange={(value) => setNewJob({ ...newJob, category: value })}
+          required
+        />
         <input
           type="text"
           name="location"

@@ -143,9 +143,8 @@ const Register = () => {
           <label className="block mb-2">Kategoria</label>
           <CategorySelect
             value={formData.category}
-            onChange={(value) =>
-              setFormData({ ...formData, category: value })
-            }
+            onChange={(value) => setFormData({ ...formData, category: value })} // Välitetään vain valittu arvo
+            required
           />
         </div>
   

@@ -64,6 +64,12 @@ const Home = () => {
 
         {/* Freelancerit */}
         <div>
+          <h3 className="text-3xl font-bold mb-2">Freelancerit</h3>
+          <p className="text-lg text-gray-400">Tutustu osaaviin ammattilaisiin ja löydä täydellinen tekijä projektiisi!</p>
+        </div>
+
+        {/* Uusimmat freelancerit */}
+        <div>
           <h4 className="text-2xl font-semibold mb-4 text-white">Uusimmat freelancerit</h4>
           <div className="grid md:grid-cols-2 gap-6">
             {freelancers.slice(0, 10).map(user => (

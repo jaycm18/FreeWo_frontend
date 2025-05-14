@@ -22,7 +22,7 @@ const CategorySelect = ({ value, onChange, required = false }) => {
     <select
       name="category"
       value={value}
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)} // Välitetään vain valittu arvo
       required={required}
       className="w-full p-3 mb-3 rounded bg-gray-900 text-white"
     >

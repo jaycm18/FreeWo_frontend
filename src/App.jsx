@@ -10,6 +10,8 @@ import FreelancerDashboard from './pages/FreelancerDashboard'
 import PrivateRoute from './components/PrivateRoute'
 import { useAuth } from './context/AuthContext'
 import EditJob from './pages/EditJob'
+import FreelancerProfile from './pages/FreelancerProfile'
+import JobProfile from './pages/JobProfile'
 
 const App = () => {
   const navigate = useNavigate()
@@ -25,13 +27,21 @@ const App = () => {
       <nav className="bg-gray-800 px-8 py-4 flex justify-between items-center shadow-md">
         <h1 className="text-2xl font-extrabold text-green-400 tracking-wide">FreeWo</h1>
         <div className="space-x-6">
-          <Link to="/" className="hover:underline">Etusivu</Link>
-          <Link to="/jobs" className="hover:underline">Toimeksiannot</Link>
-          <Link to="/freelancers" className="hover:underline">Freelancerit</Link>
+        <Link to="/" className="hover:underline">Etusivu</Link>
+          {user?.role === 'freelancer' && (
+            <Link to="/jobs" className="hover:underline">Hae Toimeksiantoja</Link>
+          )}
+          {user?.role === 'client' && (
+            <Link to="/freelancers" className="hover:underline">Hae Freelancereita</Link>
+          )}
           {user?.role === 'client' && (
             <Link to="/client-dashboard" className="hover:underline">Omat Toimeksiannot</Link>
           )}
+          {user?.role === 'freelancer' && (
+            <Link to="/freelancer-dashboard" className="hover:underline">Oma Profiili</Link>
+          )}
         </div>
+
 
         {user ? (
           <div className="space-x-4 flex items-center">
@@ -59,7 +69,9 @@ const App = () => {
         <Route path="/freelancers" element={<PrivateRoute><Freelancers /></PrivateRoute>} />
         <Route path="/client-dashboard" element={<PrivateRoute><ClientDashboard /></PrivateRoute>} />
         <Route path="/edit-job/:id" element={<PrivateRoute><EditJob /></PrivateRoute>} />
-
+        <Route path="/freelancer-profile/:id" element={<PrivateRoute><FreelancerProfile /></PrivateRoute>} />
+        <Route path="/freelancer-search" element={<PrivateRoute><Freelancers /></PrivateRoute>} />
+        <Route path="/job-profile/:id" element={<PrivateRoute><JobProfile /></PrivateRoute>} />
         <Route path="/freelancer-dashboard" element={<PrivateRoute><FreelancerDashboard /></PrivateRoute>} />
       </Routes>
     </div>

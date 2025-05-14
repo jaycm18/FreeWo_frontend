@@ -32,6 +32,7 @@ const Freelancers = () => {
     fetchFreelancers()
   }, [])
 
+  // Suodata freelancerit valitun kategorian perusteella
   const filteredFreelancers = selectedCategory
     ? freelancers.filter(f => f.category === selectedCategory)
     : freelancers
@@ -48,7 +49,7 @@ const Freelancers = () => {
         <h2 className="text-2xl font-bold mb-4">Selaa kategorioittain</h2>
         <select
           value={selectedCategory}
-          onChange={e => setSelectedCategory(e.target.value)}
+          onChange={e => setSelectedCategory(e.target.value)} // Päivitä valittu kategoria
           className="p-3 rounded bg-gray-900 text-white mb-6"
         >
           <option value="">Kaikki kategoriat</option>
