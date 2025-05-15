@@ -14,6 +14,7 @@ import FreelancerProfile from './pages/FreelancerProfile'
 import JobProfile from './pages/JobProfile'
 import AdminDashboard from './pages/AdminDashboard'
 import ClientProfile from './pages/ClientProfile'
+import Info from './pages/Info'
 
 const App = () => {
   const navigate = useNavigate()
@@ -25,11 +26,12 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col">
       <nav className="bg-gray-800 px-8 py-4 flex justify-between items-center shadow-md">
         <h1 className="text-2xl font-extrabold text-green-400 tracking-wide">FreeWo</h1>
         <div className="space-x-6">
         <Link to="/" className="hover:underline">Etusivu</Link>
+        <Link to="/info" className="hover:underline">Tietoa</Link>
           {user?.role === 'freelancer' && (
             <Link to="/jobs" className="hover:underline">Hae Toimeksiantoja</Link>
           )}
@@ -68,6 +70,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/info" element={<Info />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<PrivateRoute><Jobs /></PrivateRoute>} />
@@ -86,6 +89,22 @@ const App = () => {
           </>
         )}
       </Routes>
+    {/* Footer */}
+      <footer className="bg-gray-800 text-gray-300 py-8 mt-auto">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+          <div>
+            <span className="font-bold text-green-400 text-lg">FreeWo</span>
+            <span className="ml-4 text-sm">© {new Date().getFullYear()}</span>
+          </div>
+          <div className="mt-4 md:mt-0 text-sm">
+            <span>Ylläpito: Joonas Montonen</span>
+            <span className="mx-2">|</span>
+            <a href="mailto:joonas.montonen@gmail.com" className="underline hover:text-green-400">
+              joonas.montonen@gmail.com
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

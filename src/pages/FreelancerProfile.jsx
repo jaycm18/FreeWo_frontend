@@ -82,6 +82,16 @@ const FreelancerProfile = () => {
           <strong>Skills:</strong> {freelancer.skills}
         </p>
         <p className="text-gray-400">{freelancer.description}</p>
+        {/* Viestipainike clientille */}
+        {user?.role === 'client' && freelancer.email && (
+          <a
+            href={`mailto:${freelancer.email}?subject=Tarjouspyyntö:`}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-6 inline-block"
+          >
+            Tee tarjouspyyntö
+          </a>
+        )}
+
         {/* Poistonappi vain adminille */}
         {user?.role === 'admin' && (
           <button

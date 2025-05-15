@@ -1,1 +1,28 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* animaation pysäytys hoverilla 
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}*/

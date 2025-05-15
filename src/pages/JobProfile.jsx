@@ -81,6 +81,17 @@ const JobProfile = () => {
           <strong>Budjetti:</strong> {job.budget} €
         </p>
         <p className="text-gray-400">{job.description}</p>
+
+        {/* Viestipainike freelancerille */}
+        {user?.role === 'freelancer' && job.clientEmail && (
+          <a
+            href={`mailto:${job.clientEmail}?subject=Tarjouspyyntö: ${job.title}`}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-6 inline-block"
+          >
+            Tee tarjouspyyntö
+          </a>
+        )}
+
         {/* Poistonappi vain adminille */}
         {user?.role === 'admin' && (
           <button

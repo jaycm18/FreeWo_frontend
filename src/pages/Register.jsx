@@ -103,8 +103,8 @@ const Register = () => {
               className="w-full p-2 rounded bg-gray-700 text-white"
             >
               <option value="">Valitse rooli</option>
-              <option value="client">Työnantaja</option>
-              <option value="freelancer">Työntekijä</option>
+              <option value="client">Toimeksiantaja</option>
+              <option value="freelancer">Ammattilainen</option>
             </select>
           </div>
   
