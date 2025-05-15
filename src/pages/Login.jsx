@@ -26,6 +26,8 @@ const Login = () => {
         navigate('/client-dashboard')
       } else if (user?.role === 'freelancer') {
         navigate('/freelancer-dashboard')
+      } else if (user?.role === 'admin') {
+        navigate('/admin-dashboard')
       }
     }
   }, [user, loading, navigate])

@@ -12,6 +12,8 @@ import { useAuth } from './context/AuthContext'
 import EditJob from './pages/EditJob'
 import FreelancerProfile from './pages/FreelancerProfile'
 import JobProfile from './pages/JobProfile'
+import AdminDashboard from './pages/AdminDashboard'
+import ClientProfile from './pages/ClientProfile'
 
 const App = () => {
   const navigate = useNavigate()
@@ -39,6 +41,9 @@ const App = () => {
           )}
           {user?.role === 'freelancer' && (
             <Link to="/freelancer-dashboard" className="hover:underline">Oma Profiili</Link>
+          )}
+          {user?.role === 'admin' && (
+            <Link to="/admin-dashboard" className="hover:underline">Admin Dashboard</Link>
           )}
         </div>
 
@@ -73,6 +78,13 @@ const App = () => {
         <Route path="/freelancer-search" element={<PrivateRoute><Freelancers /></PrivateRoute>} />
         <Route path="/job-profile/:id" element={<PrivateRoute><JobProfile /></PrivateRoute>} />
         <Route path="/freelancer-dashboard" element={<PrivateRoute><FreelancerDashboard /></PrivateRoute>} />
+        {/* VAIN ADMINILLE: */}
+        {user?.role === 'admin' && (
+          <>
+            <Route path="/admin-dashboard" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+            <Route path="/client-profile/:id" element={<PrivateRoute><ClientProfile /></PrivateRoute>} />
+          </>
+        )}
       </Routes>
     </div>
   )

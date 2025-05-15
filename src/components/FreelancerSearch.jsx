@@ -16,6 +16,7 @@ const FreelancerSearch = () => {
         params: { q: searchTerm }
       })
       setResults(res.data)
+      if (typeof onSearch === 'function') onSearch(res.data) // Välitetään tulokset parent komponenttiin. Tarkistetaan, että onSearch on funktio
     } catch (err) {
       console.error('Hakutoiminto epäonnistui', err)
     }
@@ -28,7 +29,7 @@ const FreelancerSearch = () => {
       <div className="flex space-x-2 mb-4">
         <input
           type="text"
-          placeholder="Nimi, sijainti, kategoria tai skills"
+          placeholder="Nimi, sijainti, kategoria tai taidot..."
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           className="flex-1 px-4 py-2 rounded-lg bg-gray-700 text-white"

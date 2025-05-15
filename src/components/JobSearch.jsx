@@ -16,6 +16,7 @@ const JobSearch = () => {
         params: { q: searchTerm }
       })
       setResults(res.data)
+      if (typeof onSearch === 'function') onSearch(res.data) // Välitetään tulokset parent komponenttiin. Tarkistetaan, että onSearch on funktio
     } catch (err) {
       console.error('Toimeksiantojen haku epäonnistui', err)
     }

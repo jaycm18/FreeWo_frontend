@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
 
 const JobProfile = () => {
@@ -8,6 +9,7 @@ const JobProfile = () => {
   const [job, setJob] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const { user } = useAuth()
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -24,6 +26,18 @@ const JobProfile = () => {
 
     fetchJob()
   }, [id])
+
+  // Adminin poisto-funktio
+  const handleDelete = async () => {
+    if (!window.confirm('Poistetaanko toimeksianto?')) return
+    try {
+      await api.delete(`/admin/jobs/${id}`)
+      alert('Toimeksianto poistettu')
+      navigate('/jobs')
+    } catch {
+      alert('Poisto epäonnistui')
+    }
+  }
 
   if (loading) {
     return <p className="p-8">Ladataan toimeksiannon tietoja...</p>
@@ -67,6 +81,15 @@ const JobProfile = () => {
           <strong>Budjetti:</strong> {job.budget} €
         </p>
         <p className="text-gray-400">{job.description}</p>
+        {/* Poistonappi vain adminille */}
+        {user?.role === 'admin' && (
+          <button
+            onClick={handleDelete}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded mt-6"
+          >
+            Poista toimeksianto
+          </button>
+        )}
       </div>
     </div>
   )
