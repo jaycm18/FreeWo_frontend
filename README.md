@@ -1,12 +1,16 @@
-# React + Vite
+# FreeWo Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tämä on FreeWo-sovelluksen frontend-osa, joka tarjoaa selainkäyttöliittymän toimeksiantojen ja freelancereiden hallintaan. Sovellus on toteutettu Reactilla ja käyttää Tailwind CSS:ää ulkoasuun.
 
-Currently, two official plugins are available:
+## Sovelluksen kuvaus
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+FreeWo on alusta, jossa asiakkaat voivat julkaista toimeksiantoja ja freelancerit sekä kevytyrittäjät voivat hakea niitä. Frontend mahdollistaa käyttäjien rekisteröitymisen, kirjautumisen, toimeksiantojen ja profiilien hallinnan sekä hakutoiminnot.
 
-## Expanding the ESLint configuration
+## Huomio
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Tämä projekti on osa opinnäytetyötä / näyttötyötä, eikä sitä ole tarkoitettu muiden käyttöön.  
+**Ethän käytä tätä projektia omiin tarkoituksiisi.**
+
+---
+
+© 2025 FreeWo / Joonas Montonen
