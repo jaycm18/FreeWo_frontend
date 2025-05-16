@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, forwardRef, useImperativeHandle } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 
-const MyJobsList = () => {
+const MyJobsList = forwardRef((props, ref) => {
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    fetchJobs()
-  }, [])
-
+  // MÄÄRITTELE fetchJobs ENSIN!
   const fetchJobs = async () => {
+    setLoading(true)
     try {
       const res = await api.get('/jobs/my-jobs')
       setJobs(res.data)
@@ -21,6 +19,15 @@ const MyJobsList = () => {
     setLoading(false)
   }
 
+  // Sitten expose fetchJobs refille
+  useImperativeHandle(ref, () => ({
+    refreshJobs: fetchJobs
+  }))
+
+  useEffect(() => {
+    fetchJobs()
+  }, [])
+
   const handleEdit = (jobId) => {
     navigate(`/edit-job/${jobId}`)
   }
@@ -29,7 +36,7 @@ const MyJobsList = () => {
     if (!window.confirm('Haluatko varmasti poistaa tämän toimeksiannon?')) return
     try {
       await api.delete(`/jobs/${jobId}`)
-      setJobs(jobs.filter(job => job.id !== jobId && job._id !== jobId))
+      fetchJobs() // Päivitä lista poiston jälkeen
     } catch (err) {
       console.error('Toimeksiannon poisto epäonnistui', err)
     }
@@ -48,7 +55,9 @@ const MyJobsList = () => {
             <li key={job.id || job._id} className="border border-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold">{job.title}</h3>
               <p className="text-gray-400">{job.category} • {job.location}</p>
-              <p className="text-gray-500">{job.budget ? `Budjetti: ${job.budget} €` : 'Budjetti ei määritelty'}</p>
+              <p className="text-gray-500">
+                Budjetti: {typeof job.budget === 'number' ? `${job.budget} €` : job.budget}
+              </p>
               <p className="text-gray-500">Julkaistu: {new Date(job.createdAt).toLocaleDateString()}</p>
               <p className="text-gray-300 mt-2">{job.description}</p>
               <div className="mt-3 flex gap-2">
@@ -71,6 +80,6 @@ const MyJobsList = () => {
       )}
     </div>
   )
-}
+})
 
 export default MyJobsList

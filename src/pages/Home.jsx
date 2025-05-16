@@ -52,14 +52,22 @@ const Home = () => {
                 <div key={job.id + '-a'} className="bg-gray-800 p-4 rounded-xl shadow mx-2 min-w-[250px]">
                   <h5 className="text-xl font-bold text-green-400">{job.title}</h5>
                   <p className="text-sm text-gray-300">{job.category} • {job.location}</p>
-                  <p className="text-gray-400 mt-2 line-clamp-3">{job.description}</p>
+                  <p className="text-gray-400 mt-2 line-clamp-3">
+                    {job.description.length > 100
+                      ? job.description.slice(0, 100) + '…'
+                      : job.description}
+                  </p>
                 </div>
               ))}
               {jobs.slice(0, 10).map((job, idx) => (
                 <div key={job.id + '-b'} className="bg-gray-800 p-4 rounded-xl shadow mx-2 min-w-[250px]">
                   <h5 className="text-xl font-bold text-green-400">{job.title}</h5>
                   <p className="text-sm text-gray-300">{job.category} • {job.location}</p>
-                  <p className="text-gray-400 mt-2 line-clamp-3">{job.description}</p>
+                  <p className="text-gray-400 mt-2 line-clamp-3">
+                    {job.description.length > 100
+                      ? job.description.slice(0, 100) + '…'
+                      : job.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -86,14 +94,22 @@ const Home = () => {
                 <div key={user.id + '-a'} className="bg-gray-800 p-4 rounded-xl shadow mx-2 min-w-[250px]">
                   <h5 className="text-xl font-bold text-green-400">{user.name}</h5>
                   <p className="text-sm text-gray-300">{user.category}</p>
-                  <p className="text-gray-400 mt-2 line-clamp-3">{user.description}</p>
+                  <p className="text-gray-400 mt-2 line-clamp-3">
+                    {user.description.length > 100
+                      ? user.description.slice(0, 100) + '…'
+                      : user.description}
+                  </p>
                 </div>
               ))}
               {freelancers.slice(0, 10).map((user, idx) => (
                 <div key={user.id + '-b'} className="bg-gray-800 p-4 rounded-xl shadow mx-2 min-w-[250px]">
                   <h5 className="text-xl font-bold text-green-400">{user.name}</h5>
                   <p className="text-sm text-gray-300">{user.category}</p>
-                  <p className="text-gray-400 mt-2 line-clamp-3">{user.description}</p>
+                  <p className="text-gray-400 mt-2 line-clamp-3">
+                    {user.description.length > 100
+                      ? user.description.slice(0, 100) + '…'
+                      : user.description}
+                  </p>
                 </div>
               ))}
             </div>

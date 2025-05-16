@@ -22,7 +22,7 @@ const EditJob = () => {
     const fetchJob = async () => {
       try {
         const res = await api.get(`/jobs/my-jobs`)
-        const job = res.data.find(j => j.id === id || j._id === id)
+        const job = res.data.find(j => j.id === id || j._id === id) // Etsi toimeksianto id:n perusteella
         if (job) {
           setFormData({
             title: job.title,

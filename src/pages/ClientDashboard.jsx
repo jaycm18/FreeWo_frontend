@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import api from '../api/axios'
 import MyJobsList from '../components/MyJobsList'
 import CategorySelect from '../components/CategorySelect'
@@ -18,6 +18,7 @@ const ClientDashboard = () => {
     location: ''
   })
   const [editMode, setEditMode] = useState(false)
+  const myJobsListRef = useRef(null)
 
   useEffect(() => {
     // Hae oma profiili
@@ -74,6 +75,10 @@ const ClientDashboard = () => {
 
       await api.post('/jobs', jobData)
       setNewJob({ title: '', description: '', category: '', location: '', budget: '' })
+      // Päivitä MyJobsList
+      if (myJobsListRef.current) {
+        myJobsListRef.current.refreshJobs()
+      }
     } catch (err) {
       console.error('Toimeksiannon luonti epäonnistui', err)
     }
@@ -130,7 +135,8 @@ const ClientDashboard = () => {
         </button>
       </form>
 
-      <MyJobsList />
+      {/* Välitä ref MyJobsListille */}
+      <MyJobsList ref={myJobsListRef} />
 
       <h2 className="text-3xl font-bold mt-12 mb-4">Oma profiili</h2>
       {!editMode ? (
