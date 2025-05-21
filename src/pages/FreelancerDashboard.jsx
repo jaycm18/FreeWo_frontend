@@ -4,8 +4,6 @@ import api from '../api/axios'
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate()
-  const [jobs, setJobs] = useState([])
-  const [search, setSearch] = useState('')
   const [profile, setProfile] = useState({
     name: '',
     email: '',
@@ -15,16 +13,6 @@ const FreelancerDashboard = () => {
   })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
-  // Hae toimeksiannot
-  const fetchJobs = async () => {
-    try {
-      const res = await api.get('/jobs', { params: { q: search } })
-      setJobs(res.data)
-    } catch (err) {
-      console.error('Toimeksiantojen haku epäonnistui', err)
-    }
-  }
 
   // Hae freelancerin profiili
   const fetchProfile = async () => {
@@ -72,7 +60,7 @@ const FreelancerDashboard = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6">Freelancer Dashboard</h2>
+      <h2 className="text-3xl font-bold mb-6">Oma Profiili</h2>
 
       {/* Profiilikortti */}
       <div className="bg-gray-800 p-6 rounded-lg mb-10">
@@ -143,31 +131,6 @@ const FreelancerDashboard = () => {
           Poista profiili
         </button>
       </form>
-
-      {/* Toimeksiantojen haku */}
-      <h3 className="text-2xl font-bold mb-4">Hae toimeksiantoja</h3>
-      <div className="flex gap-2 mb-4">
-        <input
-          type="text"
-          placeholder="Etsi toimeksiantoja..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 p-3 rounded bg-gray-900 text-white border border-gray-600"
-        />
-        <button
-          onClick={fetchJobs}
-          className="bg-green-600 hover:bg-green-700 px-4 text-white rounded"
-        >
-          Hae
-        </button>
-      </div>
-      {jobs.map((job) => (
-        <div key={job.id} className="bg-gray-700 p-4 rounded-lg mb-4">
-          <h4 className="text-lg font-semibold">{job.title}</h4>
-          <p className="text-gray-300">{job.category} — {job.location}</p>
-          <p className="text-gray-400">{job.description}</p>
-        </div>
-      ))}
     </div>
   )
 }

@@ -85,10 +85,10 @@ const JobProfile = () => {
         {/* Viestipainike freelancerille */}
         {user?.role === 'freelancer' && job.clientEmail && (
           <a
-            href={`mailto:${job.clientEmail}?subject=Tarjouspyyntö: ${job.title}`}
+            href={`mailto:${job.clientEmail}?subject=Tarjous: ${job.title}`}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-6 inline-block"
           >
-            Tee tarjouspyyntö
+            Tee tarjous
           </a>
         )}
 
